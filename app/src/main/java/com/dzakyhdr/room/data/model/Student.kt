@@ -12,7 +12,7 @@ data class Student(
     @PrimaryKey(autoGenerate = true)
     var id: Int?,
     @ColumnInfo(name = "name")
-    var name: String = "",
+    var judul: String = "",
     @ColumnInfo(name = "email")
-    var email: String = ""
+    var catatan: String = ""
 ): Parcelable

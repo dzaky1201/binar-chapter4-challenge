@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.navArgs
 import com.dzakyhdr.room.data.StudentDatabase
 import com.dzakyhdr.room.data.model.Student
 import com.dzakyhdr.room.databinding.FragmentEditBinding
@@ -47,12 +46,12 @@ class EditFragment : DialogFragment() {
 
         mDb = StudentDatabase.getInstance(view.context)
         binding.apply {
-            edtName.setText(objectStudent?.name)
-            edtEmail.setText(objectStudent?.email)
+            edtJudul.setText(objectStudent?.judul)
+            edtCatatan.setText(objectStudent?.catatan)
             btnSave.setOnClickListener {
 
-                objectStudent?.name = edtName.text.toString()
-                objectStudent?.email = edtEmail.text.toString()
+                objectStudent?.judul = edtJudul.text.toString()
+                objectStudent?.catatan = edtCatatan.text.toString()
 
                 GlobalScope.launch {
                     val result = mDb?.studentDao()?.updateStudent(objectStudent!!)
@@ -74,6 +73,10 @@ class EditFragment : DialogFragment() {
                     dialog?.dismiss()
 
                 }
+            }
+
+            btnBatal.setOnClickListener {
+                dialog?.dismiss()
             }
         }
     }

@@ -12,7 +12,6 @@ import com.dzakyhdr.room.databinding.FragmentAddBinding
 import com.dzakyhdr.room.runOnUiThread
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class AddFragment : DialogFragment() {
@@ -39,8 +38,8 @@ class AddFragment : DialogFragment() {
             btnSave.setOnClickListener {
                 val student = Student(
                     null,
-                    name = edtName.text.toString(),
-                    email = edtEmail.text.toString()
+                    judul = edtJudul.text.toString(),
+                    catatan = edtCatatan.text.toString()
                 )
 
                 GlobalScope.launch {
@@ -64,6 +63,10 @@ class AddFragment : DialogFragment() {
 
                 }
 
+                dialog?.dismiss()
+            }
+
+            btnBatal.setOnClickListener {
                 dialog?.dismiss()
             }
         }
