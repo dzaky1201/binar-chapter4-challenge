@@ -6,8 +6,11 @@ import com.dzakyhdr.room.data.model.Student
 
 @Dao
 interface StudentDao {
-    @Query("SELECT * FROM Student")
+    @Query("SELECT * FROM Student ORDER BY judul ASC")
     fun getAllStudent(): List<Student>
+
+    @Query("SELECT * FROM Student ORDER BY judul DESC")
+    fun getAllDataDesc(): List<Student>
 
     @Insert(onConflict = REPLACE)
     fun insertStudent(student: Student):Long

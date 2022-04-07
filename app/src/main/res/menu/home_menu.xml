@@ -12,4 +12,19 @@
         android:title="logout"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/sort_by"
+        android:icon="@drawable/ic_filter"
+        android:title="Urutkan"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/sort_asc"
+                android:title="Sort A-Z" />
+            <item
+                android:id="@+id/sort_desc"
+                android:title="Sort Z-A" />
+        </menu>
+    </item>
+
 </menu>

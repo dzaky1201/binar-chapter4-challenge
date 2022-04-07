@@ -61,6 +61,16 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
                     true
                 }
+
+                R.id.sort_asc -> {
+                    fetchData()
+                    true
+                }
+
+                R.id.sort_desc -> {
+                    fetchDataDescencding()
+                    true
+                }
                 else -> false
             }
         }
@@ -93,7 +103,19 @@ class HomeFragment : Fragment() {
             }
         }
 
+    }
 
+    private fun fetchDataDescencding() {
+        val executor = Executors.newSingleThreadExecutor()
+        executor.execute {
+            data = mDb?.studentDao()?.getAllDataDesc()
+
+            runOnUiThread {
+                val adapter = StudentAdapter()
+                adapter.submitList(data)
+                binding.recyclerView.adapter = adapter
+            }
+        }
 
     }
 

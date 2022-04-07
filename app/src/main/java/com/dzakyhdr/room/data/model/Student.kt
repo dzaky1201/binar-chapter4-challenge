@@ -11,8 +11,8 @@ import kotlinx.parcelize.Parcelize
 data class Student(
     @PrimaryKey(autoGenerate = true)
     var id: Int?,
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "judul")
     var judul: String = "",
-    @ColumnInfo(name = "email")
+    @ColumnInfo(name = "catatan")
     var catatan: String = ""
 ): Parcelable
