@@ -13,6 +13,7 @@ import com.dzakyhdr.room.runOnUiThread
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 
 class EditFragment : DialogFragment() {
 
@@ -53,7 +54,9 @@ class EditFragment : DialogFragment() {
                 objectStudent?.judul = edtJudul.text.toString()
                 objectStudent?.catatan = edtCatatan.text.toString()
 
-                GlobalScope.launch {
+                val executor = Executors.newFixedThreadPool(1)
+
+                executor.execute {
                     val result = mDb?.studentDao()?.updateStudent(objectStudent!!)
                     runOnUiThread {
                         if (result != 0) {

@@ -13,6 +13,7 @@ import com.dzakyhdr.room.runOnUiThread
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 
 class AddFragment : DialogFragment() {
 
@@ -42,7 +43,9 @@ class AddFragment : DialogFragment() {
                     catatan = edtCatatan.text.toString()
                 )
 
-                GlobalScope.launch {
+                val executor = Executors.newFixedThreadPool(1)
+
+                executor.execute {
                     val result = mDb?.studentDao()?.insertStudent(student)
                     runOnUiThread {
                         if (result != 0.toLong()) {

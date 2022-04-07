@@ -14,11 +14,13 @@ import com.dzakyhdr.room.R
 import com.dzakyhdr.room.SharedPreference
 import com.dzakyhdr.room.StudentAdapter
 import com.dzakyhdr.room.data.StudentDatabase
+import com.dzakyhdr.room.data.model.Student
 import com.dzakyhdr.room.databinding.FragmentHomeBinding
 import com.dzakyhdr.room.runOnUiThread
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 
 
 class HomeFragment : Fragment() {
@@ -27,6 +29,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private var mDb: StudentDatabase? = null
     private var sharedPref: SharedPreference? = null
+    private var data: List<Student>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +48,11 @@ class HomeFragment : Fragment() {
             when (it.itemId) {
                 R.id.refresh -> {
                     fetchData()
-                    Snackbar.make(binding.root, "Data Terbaru Berhasil  Didapatkan", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        binding.root,
+                        "Data Terbaru Berhasil  Didapatkan",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                     true
                 }
 
@@ -75,17 +82,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchData() {
-        GlobalScope.launch {
-            val data = mDb?.studentDao()?.getAllStudent()
+        val executor = Executors.newSingleThreadExecutor()
+        executor.execute {
+           data = mDb?.studentDao()?.getAllStudent()
 
             runOnUiThread {
-                data?.let {
-                    val adapter = StudentAdapter()
-                    adapter.submitList(it)
-                    binding.recyclerView.adapter = adapter
-                }
+                val adapter = StudentAdapter()
+                adapter.submitList(data)
+                binding.recyclerView.adapter = adapter
             }
         }
+
+
+
     }
 
 

@@ -18,6 +18,7 @@ import com.dzakyhdr.room.ui.HomeFragment
 import com.dzakyhdr.room.ui.HomeFragmentDirections
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 
 class StudentAdapter : ListAdapter<Student, StudentAdapter.ViewHolder>(StudentDiffCallback()) {
 
@@ -40,16 +41,18 @@ class StudentAdapter : ListAdapter<Student, StudentAdapter.ViewHolder>(StudentDi
                     .setPositiveButton("Ya") { _, _ ->
                         val db = StudentDatabase.getInstance(itemView.context)
 
-                        GlobalScope.launch {
+                        val executor = Executors.newCachedThreadPool()
+
+                        executor.execute {
                             val result = db?.studentDao()?.deleteStudent(data)
                             (itemView.context as MainActivity).runOnUiThread {
-                                if (result != 0){
+                                if (result != 0) {
                                     Toast.makeText(
                                         itemView.context,
                                         "Data Berhasil Di delete",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                } else{
+                                } else {
                                     Toast.makeText(
                                         itemView.context,
                                         "Data Gagal Di delete",
@@ -57,7 +60,7 @@ class StudentAdapter : ListAdapter<Student, StudentAdapter.ViewHolder>(StudentDi
                                     ).show()
                                 }
                             }
-                            }
+                        }
 
                     }
                     .setNegativeButton("Tidak") { dialog, _ ->
